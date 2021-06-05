@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Калькулятор эллептических кривых</title>
+    <link rel="stylesheet" href="app/css/index.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+<form id="data-form" class="content-wrapper">
+    <h2>Умножение точки на скаляр</h2>
+    <div class="form-file-input">
+            <input type="file" accept=".txt" name="file" id="actual-btn" hidden/>
+            <label for="actual-btn" id="file-chosen">Нажми на меня</label>
+            <button id="submit" type="button">
+                <img src="app/img/icons/icons8-calculator-48.png" alt="Calculate">
+            </button>
+    </div>
+    <h3>Результат:</h3>
+    <div class="form-input">
+        <input required id="x" type="text">
+        <label for="x">Порядок</label>
+    </div>
+    <div class="form-input">
+        <input required id="y" type="text">
+        <label for="y">Y</label>
+    </div>
+</form>
+<img id="loader" src="app/img/icons/loader.gif" alt="Loader">
+</body>
+<script src="app/js/calc.js"></script>
+<script src="app/js/index.js"></script>
+</html>

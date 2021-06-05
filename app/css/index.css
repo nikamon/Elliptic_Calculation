@@ -1,0 +1,150 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Rubik;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background: url('../img/pictures/background.jpg') no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-wrapper {
+    max-width: 560px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 50px black;
+    background-color: #fff;
+}
+
+.content-wrapper h2, h3 {
+    font-weight: lighter;
+}
+
+ol label {
+    margin-left: 20px;
+    background-color: #02359E;
+    color: white;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    padding: 6px;
+}
+
+ol {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+h3 {
+    margin-top: 20px;
+}
+
+li:nth-child(2) {
+    margin-top: 20px;
+}
+
+button {
+    display: none;
+    vertical-align: middle;
+    background-color: #02359E;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+button img {
+    height: 20px;
+    width: 20px;
+}
+
+.form-input {
+    width: 100%;
+    position: relative;
+    font-size: 16px;
+}
+
+.form-input label {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    cursor: text;
+    color: #BDBBC6;
+
+}
+
+.form-input input:focus + label, .form-input textarea:focus + label {
+    top: 8px;
+    color: #BDBBC6;
+    transition: .5s all;
+    font-size: 12px;
+}
+
+.form-input input:valid + label, .form-input textarea:valid + label {
+    top: 8px;
+    color: #BDBBC6;
+    transition: .5s all;
+    font-size: 12px;
+}
+
+.form-input input:invalid {
+    border-color: #02359E;
+}
+
+.form-input textarea:invalid {
+    border-color: #02359E !important;
+}
+
+.form-input textarea:valid,
+.form-input textarea:focus {
+    border-color: #BDBBC6;
+    background-color: white;
+    transition: .5s all;
+}
+
+.form-file-input {
+    position: relative;
+    margin-top: 20px;
+}
+
+.form-file-input label {
+    display: block;
+}
+
+button {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+}
+
+.form-input input, .form-input textarea, .form-file-input label {
+    width: calc(100% - 60px);
+    border: none;
+    background-color: #F5F4F6;
+    outline: none;
+    color: #2A2A2A;
+    border-radius: 30px;
+    border: 1px solid #F5F4F6;
+    padding: 24px 30px 24px 30px;
+}
+
+#loader {
+    width: 50px;
+    height: 50px;
+    display: none;
+    position: absolute;
+    bottom: 20px;
+}
+
+.form-input {
+    margin-top: 40px;
+}
