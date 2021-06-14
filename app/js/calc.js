@@ -77,31 +77,42 @@ function generate(data) {
 
         const {memory, print} = wasm.exports;
         const encode = function stringToIntegerArray(string, array) {
-            const alphabet = "0123456789ABCDEF";
+            const alphabet = "0123456789ABCDEF:";
             for (let i = 0; i < string.length; i++) {
                 array[i] = alphabet.indexOf(string[i]);
             }
         };
 
         const decode = function integerArrayToString(array) {
-            const alphabet = "0123456789ABCDEF";
+            const alphabet = "0123456789ABCDEF:";
             let string = "";
             for (let i = 0; i < array.length; i++) {
                 string += alphabet[array[i]];
             }
             return string;
         };
-
-        const plaintext = data;//"1F66B5B84B7339674533F0329C74F21834281FED0732429E0C79235FC273E269";
+		
+        const plaintext = reverse(data)+ ":"+ reverse(data);
         const myArray = new Int32Array(memory.buffer, 0, plaintext.length);
 
         encode(plaintext, myArray);
 
         wasm.exports.print(myArray.byteOffset, myArray.length);
-        document.getElementById("y").value = decode(myArray);
-        document.getElementById("x").value = data;
+		let result = decode(myArray);
+		
+        document.getElementById("y").value = reverse(result.substring(result.indexOf(':')+1, result.length));
+        document.getElementById("x").value = reverse(result.substring(0, result.indexOf(':')));
 
         document.getElementById('loader').style.display = "none";
     }).catch(console.error);
 
+    function reverse(string) {
+        let copy = '';
+        for (let i = string.length-1; i > 0; i -= 2) {
+            copy += string[i-1];
+            copy += string[i];
+        }
+
+        return copy;
+    }
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #define WASM_EXPORT __attribute__((visibility("default")))
 
 typedef long int i32;
@@ -599,18 +600,23 @@ void bignum_mdiv(bignum_digit_t* a, /* делимое */
 
 WASM_EXPORT
 void print(i32 *plaintext,const i32 plaintextLength){
-char* cparam_a = "0x40FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", //а
+char* cparam_a = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF40", //а
          buff[128],
-        * cparam_b = "0xF1039CD66B7D2EB253928B976950F54CBEFBD8E4AB3AC1D2EDA8f315156CCE77", //b
-        * cparam_p = "0x43FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", //module
-        * cparam_gx= "0x0000000000000000000000000000000000000000000000000000000000000000", //x of gen point
-        * cparam_gy= "0x936A510418CF291E52F608C4663991785D83D651A3C9E45C9FD616FB3CFCF76B", //y of gen point
+         buff1[128],
+        * cparam_b = "77CE6C1515F3A8EDD2C13AABE4D8FBBE4CF55069978B9253B22E7D6BD69C03F1", //b
+        * cparam_p = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF43", //module
+        * cparam_gx= "0000000000000000000000000000000000000000000000000000000000000000", //x of gen point
+        * cparam_gy= "6BF7FC3CFB16D69F5CE4C9A351D6835D78913966C408F6521E29CF1804516A93", //y of gen point
         //* cpoint_x = "bd1a5650179d79e03fcee49d4c2bd5ddf54ce46d0cf11e4ff87bf7a890857fd0", //x of point
         //* cpoint_y = "7ac6a60361e8c8173491686d461b2826190c2eda5909054a9ab84d2ab9d99a90",
-        * alphabet = "0123456789ABCDEF", //y of point
+        * alphabet = "0123456789ABCDEF:", //y of point
         numk[plaintextLength]; //module (порядок)
 
     for (int i = 0; i < plaintextLength; i++) {
+      if (alphabet[plaintext[i]] == ':'){
+        break;
+      }
+
       numk[i] = alphabet[plaintext[i]];
     }
 
@@ -632,29 +638,29 @@ char* cparam_a = "0x40FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
     bignum_fromhex(k, numk, ECCRYPT_BIGNUM_DIGITS);
     eccrypt_point_mul(&rslt, &p1, k, &curve);
-
+    
     if (rslt.is_inf) {
     }
     else {
         int count = sizeof(buff);
         bignum_tohex(rslt.x, buff, sizeof(buff), ECCRYPT_BIGNUM_DIGITS);
-        for (int i = 0; i < count; i++) {
-          for (int j = 0; j < 16; j++){
+        
+        for (int i = 0; i<64; i++){
+          for (int j = 0; j<strlen(alphabet); j++){
             if (buff[i] == alphabet[j]){
               plaintext[i] = j;
-              break;
             }
           }
         }
-        plaintext[count] = ' ';
 
-        bignum_tohex(rslt.y, buff, sizeof(buff), ECCRYPT_BIGNUM_DIGITS);
-        for (int i = count+1; i < sizeof(buff)+count+1; i++) {
-          for (int j = 0; j < 16; j++){
-            if (buff[i] == alphabet[j]){
-              plaintext[i] = j;
-              break;
-            }
+        bignum_tohex(rslt.y, buff1, sizeof(buff1), ECCRYPT_BIGNUM_DIGITS);
+
+        for (int i = 65; i<129; i++){
+          for (int j = 0; j<strlen(alphabet); j++){
+              if (buff1[i-65] == alphabet[j]){
+                plaintext[i] = j;
+                break;
+              }
           }
         }
     }

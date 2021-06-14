@@ -58,14 +58,14 @@ fetch('../out/main.wasm').then(response =>
 
       const { memory, print } = wasm.exports;
       const encode = function stringToIntegerArray(string, array) {
-        const alphabet = "0123456789ABCDEF";
+        const alphabet = "0123456789ABCDEF:";
         for (let i = 0; i < string.length; i++) {
           array[i] = alphabet.indexOf(string[i]);
         }
       };
 
       const decode = function integerArrayToString(array) {
-        const alphabet = "0123456789ABCDEF";
+        const alphabet = "0123456789ABCDEF:";
         let string = "";
         for (let i = 0; i < array.length; i++) {
           string += alphabet[array[i]];
